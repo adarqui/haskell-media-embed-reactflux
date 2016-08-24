@@ -17,6 +17,13 @@ library
   hs-source-dirs:      src
   exposed-modules:     Web.Media.Embed.ReactFlux
   build-depends:       base >= 4.7 && < 5
+                     , react-flux
+                     , text
+                     , haskell-media-embed
+
+  if impl(ghcjs)
+     build-depends:    ghcjs-base
+
   ghc-options:         -Wall
   default-language:    Haskell2010
 
