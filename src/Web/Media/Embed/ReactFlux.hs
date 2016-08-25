@@ -40,7 +40,12 @@ type HTMLView_ = ReactElementM ViewEventHandler ()
 
 
 
-
 renderYoutube :: YoutubeEmbed -> HTMLView_
-renderYoutube YoutubeEmbed{..} = do
-  mempty
+renderYoutube youtube_embed@YoutubeEmbed{..} = do
+  iframe_ [ "src"          $= textToJSString' iframeSrc
+          , "height"       @= iframeHeight
+          , "width"        @= iframeWidth
+          , "frameboarder" @= iframeBoarder
+          ] mempty
+  where
+  IFrame{..} = youtubeEmbedToIFrame youtube_embed defaultIFrame
