@@ -1,5 +1,6 @@
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards   #-}
 
 module Web.Media.Embed.ReactFlux (
   renderYoutube
@@ -41,4 +42,5 @@ type HTMLView_ = ReactElementM ViewEventHandler ()
 
 
 renderYoutube :: YoutubeEmbed -> HTMLView_
-renderYoutube _ = undefined
+renderYoutube YoutubeEmbed{..} = do
+  mempty
