@@ -3,12 +3,12 @@
 {-# LANGUAGE RecordWildCards   #-}
 
 module Web.Media.Embed.ReactFlux (
-  renderYoutube
+    renderYoutube
+  , simpleRenderYoutube
 ) where
 
 
 
-import           Data.Monoid        ((<>))
 import           Data.Text          (Text)
 import qualified Data.Text          as Text
 import           React.Flux
@@ -49,3 +49,15 @@ renderYoutube youtube_embed@YoutubeEmbed{..} = do
           ] mempty
   where
   IFrame{..} = youtubeEmbedToIFrame youtube_embed defaultIFrame
+
+
+
+simpleRenderYoutube :: Text -> IFrame -> HTMLView_
+simpleRenderYoutube url iframe = do
+  iframe_ [ "src"          $= textToJSString' iframeSrc
+          , "height"       @= iframeHeight
+          , "width"        @= iframeWidth
+          , "frameboarder" @= iframeBoarder
+          ] mempty
+  where
+  IFrame{..} = simpleYoutubeEmbedToIFrame url iframe
