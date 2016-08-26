@@ -5,6 +5,7 @@
 module Web.Media.Embed.ReactFlux (
     renderYoutube
   , simpleRenderYoutube
+  , simpleRenderInstagram
 ) where
 
 
@@ -41,23 +42,27 @@ type HTMLView_ = ReactElementM ViewEventHandler ()
 
 
 renderYoutube :: YoutubeEmbed -> HTMLView_
-renderYoutube youtube_embed@YoutubeEmbed{..} = do
-  iframe_ [ "src"          $= textToJSString' iframeSrc
-          , "height"       @= iframeHeight
-          , "width"        @= iframeWidth
-          , "frameboarder" @= iframeBoarder
-          ] mempty
-  where
-  IFrame{..} = youtubeEmbedToIFrame youtube_embed defaultIFrame
+renderYoutube youtube_embed@YoutubeEmbed{..} = properIFrame (youtubeEmbedToIFrame youtube_embed defaultIFrame)
 
 
 
 simpleRenderYoutube :: Text -> IFrame -> HTMLView_
-simpleRenderYoutube url iframe = do
+simpleRenderYoutube url iframe = properIFrame (simpleYoutubeEmbedToIFrame url iframe)
+
+
+
+simpleRenderInstagram :: Text -> IFrame -> HTMLView_
+simpleRenderInstagram url iframe = properIFrame (simpleInstagramEmbedToIFrame url iframe)
+
+
+
+-- | Expects a filled in IFrame type
+--
+properIFrame :: IFrame -> HTMLView_
+properIFrame IFrame{..} = do
   iframe_ [ "src"          $= textToJSString' iframeSrc
           , "height"       @= iframeHeight
           , "width"        @= iframeWidth
           , "frameboarder" @= iframeBoarder
+          , maybe ("v" $= "v") (\scrolling -> "scrolling" $= (textToJSString' $ toParam scrolling)) iframeScrolling
           ] mempty
-  where
-  IFrame{..} = simpleYoutubeEmbedToIFrame url iframe
