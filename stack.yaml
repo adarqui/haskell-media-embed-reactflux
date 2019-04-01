@@ -2,6 +2,6 @@ resolver: lts-6.30
 packages:
 - '.'
 - '../haskell-media-embed'
-extra-deps: [react-flux-1.1.1]
+extra-deps: [react-flux-1.2.3]
 flags: {}
 extra-package-dbs: []

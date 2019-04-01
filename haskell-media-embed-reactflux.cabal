@@ -17,7 +17,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Web.Media.Embed.ReactFlux
   build-depends:       base >= 4.7 && < 5
-                     , react-flux
+                     , react-flux == 1.2.3
                      , text
                      , haskell-media-embed
 
